@@ -263,7 +263,7 @@ export const DetectiveBoard = () => {
   {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
   {modalData.type === 'skills' && <SkillsModal />}
   {modalData.type === 'achievements' && <AchievementsModal />}
-  {modalData.type === 'contact' && <ContactModal />}
+  {modalData.type === 'contact' && <ContactModal onClose={closeModal}/>}
 </DialogContent>
 
 
