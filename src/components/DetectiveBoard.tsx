@@ -451,58 +451,373 @@ const AchievementsModal = () => (
   </div>
 );
 
-const ContactModal = () => (
-  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300">
-    <DialogHeader>
-      <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
-    </DialogHeader>
-    <div className="mt-4 space-y-4">
-      <p className="text-sm">Ready to discuss potential collaboration or have questions about the case?</p>
+// const ContactModal = () => (
+//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+//     <DialogHeader>
+//       <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
+//     </DialogHeader>
+//     <div className="mt-4 space-y-4">
+//       <p className="text-sm">Ready to discuss potential collaboration or have questions about the case?</p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Button variant="outline" className="flex items-center gap-2">
-          <Mail size={16} />
-          Send Message
-        </Button>
-        <Button asChild variant="outline" className="flex items-center gap-2">
-  <a href="https://github.com/garvdeep-singh" target="_blank" rel="noopener noreferrer">
-    <Github size={16} />
-    View GitHub
-  </a>
-</Button>
-        <Button asChild variant="outline" className="flex items-center gap-2">
-  <a href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/" target="_blank" rel="noopener noreferrer">
-    <Linkedin size={16} />
-    Connect on LinkedIn
-  </a>
-</Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Phone size={16} />
-          Schedule Call
-        </Button>
-      </div>
+//       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//         {/* <Button variant="outline" className="flex items-center gap-2">
+//           <Mail size={16} />
+//           Send Message
+//         </Button> */}
+//         <Button
+//   variant="outline"
+//   className="flex items-center gap-2"
+//   onClick={() => window.location.href = 'mailto:garvdeep.work@email.com?subject=Inquiry'}
+// >
+//   <Mail size={16} />
+//   Send Message
+// </Button>
+//         <Button asChild variant="outline" className="flex items-center gap-2">
+//   <a href="https://github.com/garvdeep-singh" target="_blank" rel="noopener noreferrer">
+//     <Github size={16} />
+//     View GitHub
+//   </a>
+// </Button>
+//         <Button asChild variant="outline" className="flex items-center gap-2">
+//   <a href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/" target="_blank" rel="noopener noreferrer">
+//     <Linkedin size={16} />
+//     Connect on LinkedIn
+//   </a>
+// </Button>
+//         <Button
+//   variant="outline"
+//   className="flex items-center gap-2"
+//   onClick={() => window.open('https://wa.me/919877973123?text=Hi%20Garvdeep,%20I%20would%20like%20to%20schedule%20a%20call.', '_blank')}
+// >
+//   <Phone size={16} />
+//   Schedule Call
+// </Button>
+//       </div>
       
-      <div className="border border-muted p-4 rounded">
-        <h4 className="font-bold mb-2">Quick Contact Form:</h4>
-        <div className="space-y-3">
-          <input 
-            type="text" 
-            placeholder="Your Name" 
-            className="w-full p-2 border border-muted rounded typewriter text-sm"
-          />
-          <input 
-            type="email" 
-            placeholder="Your Email" 
-            className="w-full p-2 border border-muted rounded typewriter text-sm"
-          />
-          <textarea 
-            placeholder="Your Message" 
-            rows={3}
-            className="w-full p-2 border border-muted rounded typewriter text-sm"
-          />
-          <Button className="w-full typewriter">Submit Evidence</Button>
+//       {/* <div className="border border-muted p-4 rounded">
+//         <h4 className="font-bold mb-2">Quick Contact Form:</h4>
+//         <div className="space-y-3">
+//           <input 
+//             type="text" 
+//             placeholder="Your Name" 
+//             className="w-full p-2 border border-muted rounded typewriter text-sm"
+//           />
+//           <input 
+//             type="email" 
+//             placeholder="Your Email" 
+//             className="w-full p-2 border border-muted rounded typewriter text-sm"
+//           />
+//           <textarea 
+//             placeholder="Your Message" 
+//             rows={3}
+//             className="w-full p-2 border border-muted rounded typewriter text-sm"
+//           />
+//           <Button className="w-full typewriter">Submit Evidence</Button>
+//         </div>
+//       </div> */}
+
+//       <div className="border border-muted p-4 rounded">
+//   <h4 className="font-bold mb-2">Quick Contact Form:</h4>
+
+//   <form
+//     action="https://formspree.io/f/mzzvwvzj" // replace with your endpoint
+//     method="POST"
+//     className="space-y-3"
+//   >
+//     <input 
+//       type="text" 
+//       name="name"
+//       placeholder="Your Name" 
+//       className="w-full p-2 border border-muted rounded typewriter text-sm"
+//       required
+//     />
+//     <input 
+//       type="email" 
+//       name="email"
+//       placeholder="Your Email" 
+//       className="w-full p-2 border border-muted rounded typewriter text-sm"
+//       required
+//     />
+//     <textarea 
+//       name="message"
+//       placeholder="Your Message" 
+//       rows={3}
+//       className="w-full p-2 border border-muted rounded typewriter text-sm"
+//       required
+//     />
+//     <Button type="submit" className="w-full typewriter">Submit Evidence</Button>
+//   </form>
+// </div>
+//     </div>
+//   </div>
+// );
+
+
+// import { useState } from "react";
+
+// const ContactModal = () => {
+//   const [status, setStatus] = useState<null | "success" | "error">(null);
+
+//   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     const form = e.currentTarget;
+//     const formData = new FormData(form);
+
+//     try {
+//       const res = await fetch("https://formspree.io/f/mzzvwvzj", {
+//         method: "POST",
+//         body: formData,
+//         headers: { Accept: "application/json" }
+//       });
+
+//       if (res.ok) {
+//         setStatus("success");
+//         form.reset();
+//       } else {
+//         setStatus("error");
+//       }
+//     } catch {
+//       setStatus("error");
+//     }
+//   };
+
+//   return (
+//     <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
+//       </DialogHeader>
+//       <div className="mt-4 space-y-4">
+//         <p className="text-sm">Ready to discuss potential collaboration or have questions about the case?</p>
+
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+//           <Button
+//             variant="outline"
+//             className="flex items-center gap-2"
+//             onClick={() =>
+//               (window.location.href =
+//                 "mailto:garvdeep.work@email.com?subject=Inquiry")
+//             }
+//           >
+//             <Mail size={16} />
+//             Send Message
+//           </Button>
+
+//           <Button asChild variant="outline" className="flex items-center gap-2">
+//             <a
+//               href="https://github.com/garvdeep-singh"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               <Github size={16} />
+//               View GitHub
+//             </a>
+//           </Button>
+
+//           <Button asChild variant="outline" className="flex items-center gap-2">
+//             <a
+//               href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//             >
+//               <Linkedin size={16} />
+//               Connect on LinkedIn
+//             </a>
+//           </Button>
+
+//           <Button
+//             variant="outline"
+//             className="flex items-center gap-2"
+//             onClick={() =>
+//               window.open(
+//                 "https://wa.me/919877973123?text=Hi%20Garvdeep,%20I%20would%20like%20to%20schedule%20a%20call.",
+//                 "_blank"
+//               )
+//             }
+//           >
+//             <Phone size={16} />
+//             Schedule Call
+//           </Button>
+//         </div>
+
+//         <div className="border border-muted p-4 rounded">
+//           <h4 className="font-bold mb-2">Quick Contact Form:</h4>
+//           <form onSubmit={handleSubmit} className="space-y-3">
+//             <input
+//               type="text"
+//               name="name"
+//               placeholder="Your Name"
+//               className="w-full p-2 border border-muted rounded typewriter text-sm"
+//               required
+//             />
+//             <input
+//               type="email"
+//               name="email"
+//               placeholder="Your Email"
+//               className="w-full p-2 border border-muted rounded typewriter text-sm"
+//               required
+//             />
+//             <textarea
+//               name="message"
+//               placeholder="Your Message"
+//               rows={3}
+//               className="w-full p-2 border border-muted rounded typewriter text-sm"
+//               required
+//             />
+//             <Button type="submit" className="w-full typewriter">
+//               Submit Evidence
+//             </Button>
+//           </form>
+
+//           {status === "success" && (
+//             <p className="mt-2 text-green-600 text-sm">
+//               ✅ Evidence submitted successfully!
+//             </p>
+//           )}
+//           {status === "error" && (
+//             <p className="mt-2 text-red-600 text-sm">
+//               ❌ There was an error. Please try again.
+//             </p>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+
+const ContactModal = ({ onClose }) => {
+  const [status, setStatus] = useState<null | "success" | "error">(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch("https://formspree.io/f/mzzvwvzj", {
+        method: "POST",
+        body: formData,
+        headers: { Accept: "application/json" }
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+
+        // Auto-close modal after 2 seconds
+        setTimeout(() => {
+          setStatus(null);
+          onClose?.();
+        }, 2000);
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+      <DialogHeader>
+        <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
+      </DialogHeader>
+      <div className="mt-4 space-y-4">
+        <p className="text-sm">Ready to discuss potential collaboration or have questions about the case?</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() =>
+              (window.location.href =
+                "mailto:garvdeep.work@email.com?subject=Inquiry")
+            }
+          >
+            <Mail size={16} />
+            Send Message
+          </Button>
+
+          <Button asChild variant="outline" className="flex items-center gap-2">
+            <a
+              href="https://github.com/garvdeep-singh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github size={16} />
+              View GitHub
+            </a>
+          </Button>
+
+          <Button asChild variant="outline" className="flex items-center gap-2">
+            <a
+              href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin size={16} />
+              Connect on LinkedIn
+            </a>
+          </Button>
+
+          <Button
+            variant="outline"
+            className="flex items-center gap-2"
+            onClick={() =>
+              window.open(
+                "https://wa.me/919877973123?text=Hi%20Garvdeep,%20I%20would%20like%20to%20schedule%20a%20call.",
+                "_blank"
+              )
+            }
+          >
+            <Phone size={16} />
+            Schedule Call
+          </Button>
+        </div>
+
+        <div className="border border-muted p-4 rounded">
+          <h4 className="font-bold mb-2">Quick Contact Form:</h4>
+          <form onSubmit={handleSubmit} className="space-y-3">
+            <input
+              type="text"
+              name="name"
+              placeholder="Your Name"
+              className="w-full p-2 border border-muted rounded typewriter text-sm"
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              className="w-full p-2 border border-muted rounded typewriter text-sm"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Your Message"
+              rows={3}
+              className="w-full p-2 border border-muted rounded typewriter text-sm"
+              required
+            />
+            <Button type="submit" className="w-full typewriter">
+              Submit Evidence
+            </Button>
+          </form>
+
+          {status === "success" && (
+            <p className="mt-2 text-green-600 text-sm">
+              ✅ Evidence submitted successfully! Closing...
+            </p>
+          )}
+          {status === "error" && (
+            <p className="mt-2 text-red-600 text-sm">
+              ❌ There was an error. Please try again.
+            </p>
+          )}
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
