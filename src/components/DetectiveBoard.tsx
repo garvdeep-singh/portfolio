@@ -191,27 +191,47 @@ export const DetectiveBoard = () => {
           onClick={() => openModal('contact')}
         >
           <div className="evidence-pin -top-2 -left-2" />
-          <div className="evidence-document p-4 w-64 h-40 bg-paper">
+          {/* <div className="evidence-document p-4 w-64 h-40 bg-paper"> */}
+          <div className="evidence-document p-6 w-80 max-w-xs h-auto bg-paper">
             <div className="typewriter text-center">
               <h3 className="font-bold text-lg mb-2">DETECTIVE CONTACT</h3>
+              {/* <h3 className="font-bold text-lg mb-3">DETECTIVE CONTACT</h3> */}
               <div className="border-b border-muted-foreground/30 my-2" />
               
-              <div className="text-sm space-y-1">
+              <div className="text-sm space-y-2">
                 <div className="flex items-center justify-center gap-2">
                   <Mail size={14} />
-                  <span>garvdeep.dev@email.com</span>
+                  <span>garvdeep.work@email.com</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <Phone size={14} />
-                  <span>+91 XXXX-XXX-XXX</span>
+                  <span>+91 98779-73123</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
+                  {/* <Github size={14} />
+                  <span>github.com/garvdeep-singh</span> */}
                   <Github size={14} />
-                  <span>github.com/garvdeep</span>
+    <a 
+      href="https://github.com/garvdeep-singh" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="hover:underline break-all"
+      onClick={(e) => e.stopPropagation()}
+    >
+      github
+    </a>
                 </div>
                 <div className="flex items-center justify-center gap-2">
                   <Linkedin size={14} />
-                  <span>linkedin.com/in/garvdeep</span>
+                  <a 
+      href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="hover:underline"
+      onClick={(e) => e.stopPropagation()}
+    >
+      linkedin
+    </a>
                 </div>
               </div>
             </div>
@@ -221,13 +241,21 @@ export const DetectiveBoard = () => {
       
       {/* Modals */}
       <Dialog open={modalData.type !== null} onOpenChange={closeModal}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+        {/* <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           {modalData.type === 'case-file' && <CaseFileModal />}
           {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
           {modalData.type === 'skills' && <SkillsModal />}
           {modalData.type === 'achievements' && <AchievementsModal />}
           {modalData.type === 'contact' && <ContactModal />}
-        </DialogContent>
+        </DialogContent> */}
+        
+        <DialogContent className="bg-transparent p-0 shadow-none max-w-2xl max-h-[80vh] overflow-y-auto">
+  {modalData.type === 'case-file' && <CaseFileModal />}
+  {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
+  {modalData.type === 'skills' && <SkillsModal />}
+  {modalData.type === 'achievements' && <AchievementsModal />}
+  {modalData.type === 'contact' && <ContactModal />}
+</DialogContent>
       </Dialog>
     </div>
   );
@@ -412,7 +440,7 @@ const AchievementsModal = () => (
 );
 
 const ContactModal = () => (
-  <div className="typewriter">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg]">
     <DialogHeader>
       <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
     </DialogHeader>
@@ -424,14 +452,18 @@ const ContactModal = () => (
           <Mail size={16} />
           Send Message
         </Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Github size={16} />
-          View GitHub
-        </Button>
-        <Button variant="outline" className="flex items-center gap-2">
-          <Linkedin size={16} />
-          Connect on LinkedIn
-        </Button>
+        <Button asChild variant="outline" className="flex items-center gap-2">
+  <a href="https://github.com/garvdeep-singh" target="_blank" rel="noopener noreferrer">
+    <Github size={16} />
+    View GitHub
+  </a>
+</Button>
+        <Button asChild variant="outline" className="flex items-center gap-2">
+  <a href="https://www.linkedin.com/in/garvdeep-singh-b8973a1ab/" target="_blank" rel="noopener noreferrer">
+    <Linkedin size={16} />
+    Connect on LinkedIn
+  </a>
+</Button>
         <Button variant="outline" className="flex items-center gap-2">
           <Phone size={16} />
           Schedule Call

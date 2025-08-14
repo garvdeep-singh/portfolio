@@ -22,8 +22,11 @@ export default {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				// background: 'hsl(var(--background))',
+				// foreground: 'hsl(var(--foreground))',
+				foreground: '#000000ff', // light gray for dark backgrounds
+    background: '#df8e42ff', // deep noir background
+    // border: '#444',    
 				
 				// Detective Board Colors
 				cork: 'hsl(var(--cork))',
@@ -63,8 +66,10 @@ export default {
 					foreground: 'hsl(var(--popover-foreground))'
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					// DEFAULT: 'hsl(var(--card))',
+					DEFAULT: '#EAE0C8', // light paper beige
+					// foreground: 'hsl(var(--card-foreground))'
+					foreground: '#d86b22ff', 
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

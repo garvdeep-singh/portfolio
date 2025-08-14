@@ -32,8 +32,14 @@
     --shadow-deep: 0 0% 0%; /* Deep shadows */
     --shadow-medium: 0 0% 10%; /* Medium shadows */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* --card: 0 0% 100%; */
+    /* --card-foreground: 222.2 84% 4.9%; */
+    
+    /* --card: 30 30% 70%;
+    --card-foreground: 222 84% 4.9%; text color on card */
+
+    --card: 30 20% 90%; /* light beige card */
+  --card-foreground: 30 15% 20%; 
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -123,7 +129,10 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Courier Prime', monospace;
+    /* font-family: 'Courier Prime', monospace; */
+    /* font-family: 'Special Elite', cursive; */
+    /* font-family: 'Permanent Marker', cursive; */
+    font-family: 'Roboto Mono', monospace;
     overflow-x: hidden;
   }
 }
@@ -132,11 +141,17 @@
 @layer components {
   /* Cork board texture pattern */
   .cork-texture {
-    background: 
+
+
+    background-image: url('./assets/corkboard.jpg'); /* relative path from index.css */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+    /* background: 
       radial-gradient(circle at 20% 80%, hsl(var(--cork-shadow)) 0%, transparent 50%),
       radial-gradient(circle at 80% 20%, hsl(var(--cork-shadow)) 0%, transparent 50%),
       radial-gradient(circle at 40% 40%, hsl(var(--cork)) 0%, transparent 50%);
-    background-size: 100px 100px, 120px 120px, 80px 80px;
+    background-size: 100px 100px, 120px 120px, 80px 80px; */
   }
 
   /* Spotlight effect */
@@ -178,6 +193,9 @@
       0 0 0 1px hsl(var(--paper-aged));
     font-family: 'Courier Prime', monospace;
   }
+  /* .evidence-document, .polaroid, .badge-confidential {
+    font-family: 'Special Elite', cursive !important;
+} */
 
   .evidence-document:hover {
     @apply scale-105 rotate-1;
