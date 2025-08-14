@@ -103,13 +103,13 @@ export const DetectiveBoard = () => {
           </div>
         </div>
         
-        {/* Skills Report (Top Left) */}
+        {/* Skills Report (Top Left)
         <div 
-          className="hidden md:block absolute top-16 left-16 cursor-pointer"
+          className="hidden md:block absolute top-22 left-16 cursor-pointer"
           onClick={() => openModal('skills')}
         >
           <div className="evidence-pin -top-2 -left-2" />
-          <div className="evidence-document p-4 w-64 h-80 transform rotate-3">
+          <div className="evidence-document p-4 w-64 transform rotate-3">
             <div className="badge-confidential absolute -top-2 -right-2">CONFIDENTIAL</div>
             
             <div className="typewriter text-center mb-4">
@@ -121,7 +121,7 @@ export const DetectiveBoard = () => {
             <div className="typewriter text-xs space-y-3">
               <div>
                 <h4 className="font-bold mb-1">LANGUAGES:</h4>
-                <p>JavaScript ████████░░</p>
+                <p>C++████████░░</p>
                 <p>HTML/CSS ████████░░</p>
                 <p>Python ██████░░░░</p>
                 <p>Java ██████░░░░</p>
@@ -142,7 +142,47 @@ export const DetectiveBoard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
+
+        <div 
+  className="hidden md:block absolute top-28 left-16 cursor-pointer"
+  onClick={() => openModal('skills')}
+>
+  <div className="evidence-pin -top-2 -left-2" />
+  <div className="evidence-document p-3 w-56 transform rotate-3">
+    <div className="badge-confidential absolute top-1 right-2">CONFIDENTIAL</div>
+    
+    <div className="typewriter text-center mb-2">
+      <h3 className="font-bold text-sm">TECHNICAL COMPETENCY</h3>
+      <h3 className="font-bold text-sm">REPORT</h3>
+      <div className="border-b border-muted-foreground/30 my-1" />
+    </div>
+    
+    <div className="typewriter text-[11px] space-y-2">
+      <div>
+        <h4 className="font-bold mb-1">LANGUAGES:</h4>
+        <p>C++ ████████░░</p>
+        <p>HTML/CSS ████████░░</p>
+        <p>Python ██████░░░░</p>
+        <p>Java ██████░░░░</p>
+      </div>
+      
+      <div>
+        <h4 className="font-bold mb-1">FRAMEWORKS:</h4>
+        <p>• React.js</p>
+        <p>• Node.js</p>
+        <p>• Express.js</p>
+      </div>
+      
+      <div>
+        <h4 className="font-bold mb-1">SOFT SKILLS:</h4>
+        <p>• Problem Solving</p>
+        <p>• Team Collaboration</p>
+        <p>• Creative Thinking</p>
+      </div>
+    </div>
+  </div>
+</div>
         
         {/* Project Evidence (Top Right) */}
         <div 
@@ -369,7 +409,7 @@ const SkillsModal = () => (
           <h4 className="font-bold mb-3">Programming Languages:</h4>
           <div className="space-y-2">
             {[
-              { name: 'JavaScript', level: 85 },
+              { name: 'C++', level: 85 },
               { name: 'HTML/CSS', level: 90 },
               { name: 'Python', level: 70 },
               { name: 'Java', level: 65 }

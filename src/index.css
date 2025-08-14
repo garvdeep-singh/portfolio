@@ -186,13 +186,43 @@
   }
 
   /* Evidence document */
-  .evidence-document {
+
+  /* .evidence-document {
     @apply bg-secondary border border-muted-foreground/20 transform transition-all duration-300;
     box-shadow: 
-      3px 3px 8px hsl(var(--shadow-deep) / 0.2),
+      5px 5px 15px hsl(var(--shadow-deep) / 0.4),
       0 0 0 1px hsl(var(--paper-aged));
     font-family: 'Courier Prime', monospace;
-  }
+  } */
+
+
+   /* .evidence-document {
+  @apply bg-secondary border border-muted-foreground/20 transform transition-all duration-300;
+  box-shadow:
+    6px 6px 18px hsl(var(--shadow-deep) / 0.45), 
+    2px 2px 4px hsl(var(--shadow-deep) / 0.25), 
+    -4px -4px 12px rgba(255, 215, 150, 0.25),
+    0 0 0 1px hsl(var(--paper-aged) / 0.9);     
+  font-family: 'Courier Prime', monospace; } */
+
+  .evidence-document {
+  @apply bg-secondary border border-muted-foreground/20 transform transition-all duration-300;
+  box-shadow: 
+    3px 3px 8px hsl(var(--shadow-deep) / 0.2),
+    0 0 0 1px hsl(var(--paper-aged));
+  font-family: 'Courier Prime', monospace;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.evidence-document:hover {
+  box-shadow: 
+    6px 6px 16px hsl(var(--shadow-deep) / 0.35),
+    -4px -4px 12px rgba(255, 210, 140, 0.35),
+    0 0 16px rgba(255, 190, 110, 0.25),
+    0 0 0 1px hsl(var(--paper-aged) / 0.9);
+  transform: translateY(-2px) rotate(1deg);
+}
+
   /* .evidence-document, .polaroid, .badge-confidential {
     font-family: 'Special Elite', cursive !important;
 } */
@@ -220,13 +250,35 @@
   }
 
   /* Case file folder */
-  .case-file {
+  /* .case-file {
     @apply bg-paper-aged border-2 border-muted-foreground/30 relative;
     background: linear-gradient(135deg, 
       hsl(var(--paper-aged)) 0%,
       hsl(var(--paper-old)) 100%
     );
-  }
+  } */
+
+.case-file {
+  @apply bg-paper-aged border-2 border-muted-foreground/30 relative;
+  background: linear-gradient(135deg, 
+    hsl(var(--paper-aged)) 0%,
+    hsl(var(--paper-old)) 100%
+  );
+  box-shadow:
+    8px 8px 20px hsl(var(--shadow-deep) / 0.35), /* deeper desk shadow */
+    -6px -6px 18px rgba(255, 210, 140, 0.35),   /* warm top-left glow */
+    0 0 20px rgba(255, 190, 110, 0.25),         /* ambient lamp halo */
+    0 0 0 1px hsl(var(--paper-aged) / 0.9);     /* crisp paper edge */
+  transition: box-shadow 0.3s ease;
+}
+
+.case-file:hover {
+  box-shadow:
+    10px 10px 28px hsl(var(--shadow-deep) / 0.45),
+    -8px -8px 24px rgba(255, 210, 140, 0.45),
+    0 0 28px rgba(255, 190, 110, 0.35),
+    0 0 0 1px hsl(var(--paper-aged) / 0.9);
+}
 
   /* Handwritten font */
   .handwritten {
