@@ -55,16 +55,16 @@ export const DetectiveBoard = () => {
       {/* Investigation strings - background layer */}
       <svg className="hidden md:block absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1 }}>
         {/* String from case file to skills report */}
-        <line x1="50%" y1="45%" x2="15%" y2="25%" className="stroke-string stroke-1 opacity-80" />
+        <line x1="50%" y1="45%" x2="15%" y2="25%" className="stroke-string stroke-[4px] opacity-80" />
         
         {/* String from case file to projects */}
-        <line x1="55%" y1="50%" x2="85%" y2="30%" className="stroke-string stroke-1 opacity-80" />
+        <line x1="55%" y1="50%" x2="85%" y2="30%" className="stroke-string stroke-[4px] opacity-80" />
         
         {/* String from skills to achievements */}
-        <line x1="20%" y1="30%" x2="25%" y2="75%" className="stroke-string stroke-1 opacity-80" />
+        <line x1="20%" y1="30%" x2="25%" y2="75%" className="stroke-string stroke-[4px] opacity-80" />
         
         {/* String from projects to contact */}
-        <line x1="80%" y1="35%" x2="75%" y2="75%" className="stroke-string stroke-1 opacity-80" />
+        <line x1="80%" y1="35%" x2="75%" y2="75%" className="stroke-string stroke-[4px] opacity-80" />
       </svg>
       
       {/* Evidence pins and items */}
@@ -173,7 +173,7 @@ export const DetectiveBoard = () => {
         
         {/* Achievement Map (Bottom Left) */}
         <div 
-          className="hidden md:block absolute bottom-16 left-20 cursor-pointer"
+          className="hidden md:block absolute bottom-16 left-40 cursor-pointer"
           onClick={() => openModal('achievements')}
         >
           <div className="evidence-pin -top-2 -left-2" />
@@ -249,13 +249,25 @@ export const DetectiveBoard = () => {
           {modalData.type === 'contact' && <ContactModal />}
         </DialogContent> */}
         
-        <DialogContent className="bg-transparent p-0 shadow-none max-w-2xl max-h-[80vh] overflow-y-auto">
+        {/* <DialogContent className="bg-transparent p-0 shadow-none max-w-2xl max-h-[80vh] overflow-y-auto">
+  {modalData.type === 'case-file' && <CaseFileModal />}
+  {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
+  {modalData.type === 'skills' && <SkillsModal />}
+  {modalData.type === 'achievements' && <AchievementsModal />}
+  {modalData.type === 'contact' && <ContactModal />}
+</DialogContent> */}
+
+
+          <DialogContent className="bg-transparent p-0 shadow-none flex justify-center items-center overflow-visible">
   {modalData.type === 'case-file' && <CaseFileModal />}
   {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
   {modalData.type === 'skills' && <SkillsModal />}
   {modalData.type === 'achievements' && <AchievementsModal />}
   {modalData.type === 'contact' && <ContactModal />}
 </DialogContent>
+
+
+
       </Dialog>
     </div>
   );
@@ -263,7 +275,7 @@ export const DetectiveBoard = () => {
 
 // Modal Components
 const CaseFileModal = () => (
-  <div className="typewriter">
+  <div className=" bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+1deg] hover:rotate-0 transition-transform duration-300">
     <DialogHeader>
       <DialogTitle className="text-2xl">Investigation Notes: Garvdeep Singh</DialogTitle>
     </DialogHeader>
@@ -294,7 +306,7 @@ const CaseFileModal = () => (
 );
 
 const ProjectModal = ({ project }: { project: any }) => (
-  <div className="typewriter">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300">
     <DialogHeader>
       <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
     </DialogHeader>
@@ -345,7 +357,7 @@ const ProjectModal = ({ project }: { project: any }) => (
 );
 
 const SkillsModal = () => (
-  <div className="typewriter">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-30">
     <DialogHeader>
       <DialogTitle className="text-2xl">Complete Technical Analysis</DialogTitle>
     </DialogHeader>
@@ -412,7 +424,7 @@ const SkillsModal = () => (
 );
 
 const AchievementsModal = () => (
-  <div className="typewriter">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
     <DialogHeader>
       <DialogTitle className="text-2xl">Journey Timeline & Achievements</DialogTitle>
     </DialogHeader>
@@ -440,7 +452,7 @@ const AchievementsModal = () => (
 );
 
 const ContactModal = () => (
-  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg]">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-300">
     <DialogHeader>
       <DialogTitle className="text-2xl">Open Communication Channel</DialogTitle>
     </DialogHeader>
