@@ -151,7 +151,7 @@ export const DetectiveBoard = () => {
         <p>C++ ████████░░</p>
         <p>HTML/CSS ████████░░</p>
         <p>Python ██████░░░░</p>
-        <p>Java ██████░░░░</p>
+        <p>Javascript ██████░░░░</p>
       </div>
       
       <div>
