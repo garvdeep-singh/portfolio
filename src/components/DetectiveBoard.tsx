@@ -22,7 +22,29 @@ export const DetectiveBoard = () => {
   const closeModal = () => {
     setModalData({ type: null });
   };
-  
+//   const projects = [
+//   {
+//     title: 'Wall of Passion',
+//     image: projectIkipendence,
+//     type: 'Web Application',
+//     role: 'Full-Stack Developer',
+//     duration: '2-3 weeks',
+//     status: 'Completed',
+//     technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
+//     summary: 'A web platform for users to post their passions and interact with others. Shows ability to implement full-stack features and interactive UI.'
+//   },
+//   {
+//     title: 'Personality Game',
+//     image: projectPersonality,
+//     type: 'Web Application',
+//     role: 'Full-Stack Developer',
+//     duration: '2-3 weeks',
+//     status: 'Completed',
+//     technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
+//     summary: 'An interactive game that predicts personality types based on user input. Demonstrates logical reasoning and frontend-interactivity skills.'
+//   }
+// ];
+
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden cursor-detective">
@@ -37,7 +59,12 @@ export const DetectiveBoard = () => {
             <div className="hidden md:flex items-center gap-6 typewriter text-sm">
               <button onClick={() => openModal('case-file')} className="hover:underline underline-offset-4">Case File</button>
               <button onClick={() => openModal('skills')} className="hover:underline underline-offset-4">Skills</button>
-              <button onClick={() => openModal('project', { title: 'Wall of Passion', image: projectIkipendence })} className="hover:underline underline-offset-4">Projects</button>
+              <button
+  onClick={() => openModal('project', { index: 0 })}
+  className="hover:underline underline-offset-4"
+>
+  Projects
+</button>
               <button onClick={() => openModal('achievements')} className="hover:underline underline-offset-4">Achievements</button>
               <button onClick={() => openModal('contact')} className="hover:underline underline-offset-4">Contact</button>
             </div>
@@ -312,14 +339,14 @@ const CaseFileModal = () => (
   </div>
 );
 
+
 // const ProjectModal = ({ project }: { project: any }) => (
-//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300">
+//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300 max-w-xl">
 //     <DialogHeader>
 //       <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
 //     </DialogHeader>
 //     <div className="mt-4 space-y-4">
 //       <img src={project?.image} alt={project?.title} className="w-full h-64 object-cover rounded border" />
-      
 //       <div className="grid grid-cols-2 gap-4">
 //         <div>
 //           <h4 className="font-bold mb-2">Project Details:</h4>
@@ -330,34 +357,34 @@ const CaseFileModal = () => (
 //             <li><strong>Status:</strong> Completed</li>
 //           </ul>
 //         </div>
-        
 //         <div>
 //           <h4 className="font-bold mb-2">Technologies Used:</h4>
 //           <div className="flex flex-wrap gap-2">
-//             <span className="badge-confidential text-xs">HTML5</span>
-//             <span className="badge-confidential text-xs">CSS3</span>
-//             <span className="badge-confidential text-xs">JavaScript</span>
-//             <span className="badge-confidential text-xs">React</span>
+//             {project?.technologies?.map((tech: string) => (
+//               <span key={tech} className="badge-confidential text-xs">{tech}</span>
+//             ))}
 //           </div>
 //         </div>
 //       </div>
-      
 //       <div className="border border-muted p-4 rounded">
 //         <h4 className="font-bold mb-2">Investigation Summary:</h4>
-//         <p className="text-sm">
-//           This evidence demonstrates the subject's ability to create functional, 
-//           user-friendly web applications from concept to completion. Shows strong 
-//           understanding of modern development practices and user experience design.
-//         </p>
+//         <p className="text-sm">{project?.summary}</p>
 //       </div>
-      
 //       <div className="flex gap-2">
-//         <Button variant="outline" size="sm" className="typewriter">
-//           View Live Demo
-//         </Button>
-//         <Button variant="outline" size="sm" className="typewriter">
-//           Examine Code
-//         </Button>
+//         {project?.live && (
+//           <Button variant="outline" size="sm" className="typewriter">
+//             <a href={project.live} target="_blank" rel="noopener noreferrer">
+//               View Live Demo
+//             </a>
+//           </Button>
+//         )}
+//         {project?.code && (
+//           <Button variant="outline" size="sm" className="typewriter">
+//             <a href={project.code} target="_blank" rel="noopener noreferrer">
+//               Examine Code
+//             </a>
+//           </Button>
+//         )}
 //       </div>
 //     </div>
 //   </div>
@@ -365,55 +392,96 @@ const CaseFileModal = () => (
 
 
 
-const ProjectModal = ({ project }: { project: any }) => (
-  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300 max-w-xl">
-    <DialogHeader>
-      <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
-    </DialogHeader>
-    <div className="mt-4 space-y-4">
-      <img src={project?.image} alt={project?.title} className="w-full h-64 object-cover rounded border" />
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <h4 className="font-bold mb-2">Project Details:</h4>
-          <ul className="text-sm space-y-1">
-            <li><strong>Type:</strong> Web Application</li>
-            <li><strong>Role:</strong> Full-Stack Developer</li>
-            <li><strong>Duration:</strong> 2-3 weeks</li>
-            <li><strong>Status:</strong> Completed</li>
-          </ul>
-        </div>
-        <div>
-          <h4 className="font-bold mb-2">Technologies Used:</h4>
-          <div className="flex flex-wrap gap-2">
-            {project?.technologies?.map((tech: string) => (
-              <span key={tech} className="badge-confidential text-xs">{tech}</span>
-            ))}
+
+
+
+const ProjectModal = ({ project }: { project: any }) => {
+  const [currentIndex, setCurrentIndex] = useState(
+    project?.index || 0
+  );
+
+  const projectsList = [
+    {
+      title: 'Wall of Passion',
+      image: projectIkipendence,
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js', 'MongoDB'],
+      summary: 'Collaborative note-sharing platform for NIT Jalandhar students with role-based access and responsive design.',
+      live: 'https://ikipendence.com/wallofpassion',
+      code: 'https://github.com/garvdeep-singh/Wall_of_Passion'
+    },
+    {
+      title: 'Personality Game',
+      image: projectPersonality,
+      technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
+      summary: 'Interactive personality quiz game with dynamic scoring, responsive UI, and smooth animations.',
+      live: 'https://ikipendence.com/personalitygame',
+      code: 'https://github.com/garvdeep-singh/PersonalityGame'
+    }
+  ];
+
+  const currentProject = projectsList[currentIndex];
+
+  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % projectsList.length);
+  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + projectsList.length) % projectsList.length);
+
+  return (
+    <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300 max-w-xl">
+      <DialogHeader>
+        <DialogTitle className="text-2xl">Evidence Analysis: {currentProject?.title}</DialogTitle>
+      </DialogHeader>
+      <div className="mt-4 space-y-4">
+        <img src={currentProject?.image} alt={currentProject?.title} className="w-full h-64 object-cover rounded border" />
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <h4 className="font-bold mb-2">Project Details:</h4>
+            <ul className="text-sm space-y-1">
+              <li><strong>Type:</strong> Web Application</li>
+              <li><strong>Role:</strong> Full-Stack Developer</li>
+              <li><strong>Duration:</strong> 2-3 weeks</li>
+              <li><strong>Status:</strong> Completed</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold mb-2">Technologies Used:</h4>
+            <div className="flex flex-wrap gap-2">
+              {currentProject?.technologies?.map((tech: string) => (
+                <span key={tech} className="badge-confidential text-xs">{tech}</span>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="border border-muted p-4 rounded">
-        <h4 className="font-bold mb-2">Investigation Summary:</h4>
-        <p className="text-sm">{project?.summary}</p>
-      </div>
-      <div className="flex gap-2">
-        {project?.live && (
-          <Button variant="outline" size="sm" className="typewriter">
-            <a href={project.live} target="_blank" rel="noopener noreferrer">
-              View Live Demo
-            </a>
-          </Button>
-        )}
-        {project?.code && (
-          <Button variant="outline" size="sm" className="typewriter">
-            <a href={project.code} target="_blank" rel="noopener noreferrer">
-              Examine Code
-            </a>
-          </Button>
-        )}
+        <div className="border border-muted p-4 rounded">
+          <h4 className="font-bold mb-2">Investigation Summary:</h4>
+          <p className="text-sm">{currentProject?.summary}</p>
+        </div>
+        <div className="flex gap-2">
+          {currentProject?.live && (
+            <Button variant="outline" size="sm" className="typewriter">
+              <a href={currentProject.live} target="_blank" rel="noopener noreferrer">
+                View Live Demo
+              </a>
+            </Button>
+          )}
+          {currentProject?.code && (
+            <Button variant="outline" size="sm" className="typewriter">
+              <a href={currentProject.code} target="_blank" rel="noopener noreferrer">
+                Examine Code
+              </a>
+            </Button>
+          )}
+        </div>
+
+        {/* Add Next/Prev buttons */}
+        <div className="flex justify-between mt-4">
+          <Button variant="outline" size="sm" onClick={handlePrev}>← Previous</Button>
+          <Button variant="outline" size="sm" onClick={handleNext}>Next →</Button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
+
+
 const SkillsModal = () => (
   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-30">
     <DialogHeader>
@@ -508,10 +576,6 @@ const AchievementsModal = () => (
     </div>
   </div>
 );
-
-
-
-
 
 const ContactModal = ({ onClose }) => {
   const [status, setStatus] = useState<null | "success" | "error">(null);
