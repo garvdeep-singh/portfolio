@@ -22,6 +22,7 @@ export const DetectiveBoard = () => {
   const closeModal = () => {
     setModalData({ type: null });
   };
+  
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden cursor-detective">
@@ -36,7 +37,7 @@ export const DetectiveBoard = () => {
             <div className="hidden md:flex items-center gap-6 typewriter text-sm">
               <button onClick={() => openModal('case-file')} className="hover:underline underline-offset-4">Case File</button>
               <button onClick={() => openModal('skills')} className="hover:underline underline-offset-4">Skills</button>
-              <button onClick={() => openModal('project', { title: 'Ikipendence Wall', image: projectIkipendence })} className="hover:underline underline-offset-4">Projects</button>
+              <button onClick={() => openModal('project', { title: 'Wall of Passion', image: projectIkipendence })} className="hover:underline underline-offset-4">Projects</button>
               <button onClick={() => openModal('achievements')} className="hover:underline underline-offset-4">Achievements</button>
               <button onClick={() => openModal('contact')} className="hover:underline underline-offset-4">Contact</button>
             </div>
@@ -89,12 +90,12 @@ export const DetectiveBoard = () => {
               
               <div className="typewriter text-sm space-y-2">
                 <p><strong>Subject:</strong> CS Engineering Student</p>
-                <p><strong>Specialization:</strong> Web Development</p>
+                <p><strong>Specialization:</strong> WebD & DSA</p>
                 <p><strong>Status:</strong> Active Developer</p>
-                <p><strong>First Spotted:</strong> 2022</p>
+                <p><strong>First Spotted:</strong> 2023</p>
               </div>
               
-              <div className="handwritten text-red-600 text-sm mt-4 transform -rotate-2">
+              <div className="handwritten text-[#4b2e2e] text-[17px] mt-4 transform -rotate-2 ">
                 "Suspected of solving complex problems with coffee ☕"
               </div>
             </div>
@@ -146,7 +147,17 @@ export const DetectiveBoard = () => {
         {/* Project Evidence (Top Right) */}
         <div 
           className="block md:absolute top-6 right-4 md:top-20 md:right-20 cursor-pointer"
-          onClick={() => openModal('project', { title: 'Ikipendence Wall', image: projectIkipendence })}
+          // onClick={() => openModal('project', { title: 'Wall of Passion', image: projectIkipendence })}
+          onClick={() =>
+  openModal('project', {
+    title: 'Wall of Passion',
+    image: projectIkipendence,
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Node.js', 'MongoDB'],
+    summary: 'Collaborative note-sharing platform for NIT Jalandhar students with role-based access and responsive design.',
+    live: 'https://ikipendence.com/wallofpassion',
+    code: 'https://github.com/garvdeep-singh/Wall_of_Passion'
+  })
+}
         >
           <div className="evidence-pin -top-2 -left-2" />
           <div className="polaroid w-48 transform -rotate-6">
@@ -159,13 +170,23 @@ export const DetectiveBoard = () => {
         
         <div 
           className="block md:absolute top-36 right-4 md:top-32 md:right-32 cursor-pointer"
-          onClick={() => openModal('project', { title: 'Personality Game', image: projectPersonality })}
+          // onClick={() => openModal('project', { title: 'Personality Game', image: projectPersonality })}
+          onClick={() =>
+  openModal('project', {
+    title: 'Personality Game',
+    image: projectPersonality,
+    technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
+    summary: 'Interactive personality quiz game with dynamic scoring, responsive UI, and smooth animations.',
+    live: 'https://ikipendence.com/personalitygame',
+    code: 'https://github.com/garvdeep-singh/PersonalityGame'
+  })
+}
         >
           <div className="evidence-pin -top-2 -left-2" />
           <div className="polaroid w-44 transform rotate-12">
             <img src={projectPersonality} alt="Personality Game" className="w-full h-28 object-cover" />
             <div className="handwritten text-sm text-center mt-2">
-              Exhibit B - Mind Reader
+              Personality Game
             </div>
           </div>
         </div>
@@ -267,15 +288,16 @@ const CaseFileModal = () => (
     <div className="mt-4 space-y-4">
       <div className="badge-confidential float-right">CASE SOLVED</div>
       <p className="text-sm leading-relaxed">
-        Subject is a passionate Computer Science Engineering student with a proven track record in web development. 
-        Specializes in creating engaging user experiences and solving complex programming challenges.
+        Subject is a passionate Computer Science Engineering student with a proven track record in Web Development and Data Structures & Algorithms (DSA). 
+  Specializes in creating engaging user experiences and solving complex programming and algorithmic challenges.
       </p>
       
       <div className="border border-muted p-4 rounded">
         <h4 className="font-bold mb-2">Key Findings:</h4>
         <ul className="text-sm space-y-1 list-disc list-inside">
-          <li>Self-taught web developer since 2022</li>
-          <li>Strong foundation in modern JavaScript frameworks</li>
+          <li>Self-taught web developer since 2023</li>
+          <li>Strong foundation in Data Structures & Algorithms (DSA)</li>
+          <li>Proficient in modern JavaScript frameworks</li>
           <li>Passionate about creating meaningful digital experiences</li>
           <li>Active learner with continuous skill development</li>
           <li>Team player with excellent communication skills</li>
@@ -284,20 +306,72 @@ const CaseFileModal = () => (
       
       <p className="text-sm italic">
         "The evidence clearly shows this individual possesses the technical skills, creativity, 
-        and dedication required for any development team. Case status: HIGHLY RECOMMENDED."
+        and dedication required for any development team." <br></br>Case status: HIGHLY RECOMMENDED.
       </p>
     </div>
   </div>
 );
 
+// const ProjectModal = ({ project }: { project: any }) => (
+//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300">
+//     <DialogHeader>
+//       <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
+//     </DialogHeader>
+//     <div className="mt-4 space-y-4">
+//       <img src={project?.image} alt={project?.title} className="w-full h-64 object-cover rounded border" />
+      
+//       <div className="grid grid-cols-2 gap-4">
+//         <div>
+//           <h4 className="font-bold mb-2">Project Details:</h4>
+//           <ul className="text-sm space-y-1">
+//             <li><strong>Type:</strong> Web Application</li>
+//             <li><strong>Role:</strong> Full-Stack Developer</li>
+//             <li><strong>Duration:</strong> 2-3 weeks</li>
+//             <li><strong>Status:</strong> Completed</li>
+//           </ul>
+//         </div>
+        
+//         <div>
+//           <h4 className="font-bold mb-2">Technologies Used:</h4>
+//           <div className="flex flex-wrap gap-2">
+//             <span className="badge-confidential text-xs">HTML5</span>
+//             <span className="badge-confidential text-xs">CSS3</span>
+//             <span className="badge-confidential text-xs">JavaScript</span>
+//             <span className="badge-confidential text-xs">React</span>
+//           </div>
+//         </div>
+//       </div>
+      
+//       <div className="border border-muted p-4 rounded">
+//         <h4 className="font-bold mb-2">Investigation Summary:</h4>
+//         <p className="text-sm">
+//           This evidence demonstrates the subject's ability to create functional, 
+//           user-friendly web applications from concept to completion. Shows strong 
+//           understanding of modern development practices and user experience design.
+//         </p>
+//       </div>
+      
+//       <div className="flex gap-2">
+//         <Button variant="outline" size="sm" className="typewriter">
+//           View Live Demo
+//         </Button>
+//         <Button variant="outline" size="sm" className="typewriter">
+//           Examine Code
+//         </Button>
+//       </div>
+//     </div>
+//   </div>
+// );
+
+
+
 const ProjectModal = ({ project }: { project: any }) => (
-  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300">
+  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300 max-w-xl">
     <DialogHeader>
       <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
     </DialogHeader>
     <div className="mt-4 space-y-4">
       <img src={project?.image} alt={project?.title} className="w-full h-64 object-cover rounded border" />
-      
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h4 className="font-bold mb-2">Project Details:</h4>
@@ -308,39 +382,38 @@ const ProjectModal = ({ project }: { project: any }) => (
             <li><strong>Status:</strong> Completed</li>
           </ul>
         </div>
-        
         <div>
           <h4 className="font-bold mb-2">Technologies Used:</h4>
           <div className="flex flex-wrap gap-2">
-            <span className="badge-confidential text-xs">HTML5</span>
-            <span className="badge-confidential text-xs">CSS3</span>
-            <span className="badge-confidential text-xs">JavaScript</span>
-            <span className="badge-confidential text-xs">React</span>
+            {project?.technologies?.map((tech: string) => (
+              <span key={tech} className="badge-confidential text-xs">{tech}</span>
+            ))}
           </div>
         </div>
       </div>
-      
       <div className="border border-muted p-4 rounded">
         <h4 className="font-bold mb-2">Investigation Summary:</h4>
-        <p className="text-sm">
-          This evidence demonstrates the subject's ability to create functional, 
-          user-friendly web applications from concept to completion. Shows strong 
-          understanding of modern development practices and user experience design.
-        </p>
+        <p className="text-sm">{project?.summary}</p>
       </div>
-      
       <div className="flex gap-2">
-        <Button variant="outline" size="sm" className="typewriter">
-          View Live Demo
-        </Button>
-        <Button variant="outline" size="sm" className="typewriter">
-          Examine Code
-        </Button>
+        {project?.live && (
+          <Button variant="outline" size="sm" className="typewriter">
+            <a href={project.live} target="_blank" rel="noopener noreferrer">
+              View Live Demo
+            </a>
+          </Button>
+        )}
+        {project?.code && (
+          <Button variant="outline" size="sm" className="typewriter">
+            <a href={project.code} target="_blank" rel="noopener noreferrer">
+              Examine Code
+            </a>
+          </Button>
+        )}
       </div>
     </div>
   </div>
 );
-
 const SkillsModal = () => (
   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-30">
     <DialogHeader>
@@ -378,7 +451,7 @@ const SkillsModal = () => (
         <div>
           <h4 className="font-bold mb-3">Frameworks & Tools:</h4>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            {['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Git', 'VS Code', 'Figma', 'Bootstrap'].map(tool => (
+            {['React.js', 'Node.js', 'Express.js', 'MongoDB', 'Git', 'VS Code', 'Postman', 'Github'].map(tool => (
               <div key={tool} className="bg-secondary p-2 rounded text-center">
                 {tool}
               </div>
