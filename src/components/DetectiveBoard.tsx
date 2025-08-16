@@ -792,8 +792,24 @@ const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         output = "Available commands: resume, projects, skills, achievements, contact, clear";
         break;
       case "resume":
-        output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+        output = "Resume: https://drive.google.com/file/d/1KJxHRQSGA13_82DPcnatZvoaCxFoC9As/view?usp=sharing";
         break;
+
+    //   case "resume":
+    // output = (
+    //   <span>
+    //     Resume:{" "}
+    //     <a
+    //       href="https://drive.google.com/file/d/1KJxHRQSGA13_82DPcnatZvoaCxFoC9As/view?usp=sharing"
+    //       target="_blank"
+    //       rel="noopener noreferrer"
+    //       className="underline text-blue-400 hover:text-blue-600"
+    //     >
+    //       View Resume
+    //     </a>
+    //   </span>
+    // );
+    // break;
       case "projects":
         output = "Projects: Wall of Passion, Personality Game";
         break;
