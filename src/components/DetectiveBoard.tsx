@@ -6,6 +6,7 @@ import profileImage from '@/assets/garvdeep-profile.jpg';
 import projectIkipendence from '@/assets/project-ikipendence.jpg';
 import projectPersonality from '@/assets/project-personality-game.jpg';
 import achievementMap from '@/assets/achievement-map.jpg';
+import Magnifier from "@/components/MagnifierCursor";
 
 interface ModalData {
   type: 'case-file' | 'project' | 'console' | 'skills' | 'resume' | 'contact' | null;
@@ -83,6 +84,7 @@ export const DetectiveBoard = () => {
         >
           
           {/* Suspicious Note on Top */}
+          {/* <Magnifier zoom={2.5} size={180}> */}
 <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 -rotate-6 text-yellow-700 font-handwritten text-sm text-center shadow-lg px-4 py-1 bg-paper-aged/80 border border-muted rounded w-80 z-20">
   "Suspected of solving complex problems with coffee ☕"
 </div>
@@ -106,14 +108,10 @@ export const DetectiveBoard = () => {
                 <p><strong>Status:</strong> Active Developer</p>
                 <p><strong>First Spotted:</strong> 2023</p>
               </div>
-              
-              {/* <div className="suspector text-[17px] mt-8 transform -rotate-2 ">
-                "Suspected of solving complex problems with coffee ☕"
-              </div> */}
             </div>
           </div>
         </div>
-        
+        {/* </Magnifier> */}
 
 
         <div 
