@@ -73,14 +73,21 @@ export const DetectiveBoard = () => {
       
       {/* Evidence pins and items */}
       <div className="relative z-10 pt-20 md:pt-24 pb-8 min-h-screen">
+
         
         {/* Central Case File (About Me) */}
+        
         <div 
           className="relative md:absolute top-6 md:top-1/2 left-1/2 md:left-1/2 transform md:-translate-x-1/2 md:-translate-y-1/2 cursor-pointer mx-auto md:mx-0 max-w-[20rem] mt-6 md:mt-0"
           onClick={() => openModal('case-file')}
         >
+          
+          {/* Suspicious Note on Top */}
+<div className="absolute -top-12 left-1/2 transform -translate-x-1/2 -rotate-6 text-yellow-700 font-handwritten text-sm text-center shadow-lg px-4 py-1 bg-paper-aged/80 border border-muted rounded w-80 z-20">
+  "Suspected of solving complex problems with coffee ☕"
+</div>
           <div className="evidence-pin -top-2 -left-2" />
-          <div className="case-file p-6 w-72 h-[22rem] sm:w-80 sm:h-96 relative">
+          <div className="case-file p-6 w-72 h-[22rem] sm:w-80 sm:h-96 relative z-10">
             <div className="absolute top-2 left-4 w-16 h-6 bg-paper-old border border-muted-foreground/30 rounded-sm">
               <div className="typewriter text-xs text-center pt-1">CASE FILE</div>
             </div>
@@ -100,9 +107,9 @@ export const DetectiveBoard = () => {
                 <p><strong>First Spotted:</strong> 2023</p>
               </div>
               
-              <div className="handwritten text-[#4b2e2e] text-[17px] mt-4 transform -rotate-2 ">
+              {/* <div className="suspector text-[17px] mt-8 transform -rotate-2 ">
                 "Suspected of solving complex problems with coffee ☕"
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -167,7 +174,7 @@ export const DetectiveBoard = () => {
           <div className="evidence-pin -top-2 -left-2" />
           <div className="polaroid w-48 transform -rotate-6">
             <img src={projectIkipendence} alt="Ikipendence Project" className="w-full h-32 object-cover" />
-            <div className="handwritten text-sm text-center mt-2">
+            <div className="typewriter text-sm text-center mt-2">
               Exhibit A - Wall of Passion
             </div>
           </div>
@@ -190,7 +197,7 @@ export const DetectiveBoard = () => {
           <div className="evidence-pin -top-2 -left-2" />
           <div className="polaroid w-44 transform rotate-12">
             <img src={projectPersonality} alt="Personality Game" className="w-full h-28 object-cover" />
-            <div className="handwritten text-sm text-center mt-2">
+            <div className="typewriter text-sm text-center mt-2">
               Personality Game
             </div>
           </div>

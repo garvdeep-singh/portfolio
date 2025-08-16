@@ -291,6 +291,11 @@
     font-family: 'Special Elite', cursive;
     letter-spacing: 0.5px;
   }
+  .suspector{
+    /* font-family: 'Patrick Hand', cursive; */
+    font-family: 'Lora';
+    color : #1a1a1a;
+  }
 
   /* Investigation badge */
   .badge-confidential {
