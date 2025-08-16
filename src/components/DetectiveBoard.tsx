@@ -65,7 +65,7 @@ export const DetectiveBoard = () => {
   <g className="hidden md:block">
     <line x1="50%" y1="45%" x2="15%" y2="25%" className="stroke-string stroke-[4px] opacity-80" />
     <line x1="55%" y1="50%" x2="85%" y2="30%" className="stroke-string stroke-[4px] opacity-80" />
-    <line x1="20%" y1="30%" x2="25%" y2="75%" className="stroke-string stroke-[4px] opacity-80" />
+    <line x1="15%" y1="30%" x2="25%" y2="75%" className="stroke-string stroke-[4px] opacity-80" />
     <line x1="80%" y1="35%" x2="75%" y2="75%" className="stroke-string stroke-[4px] opacity-80" />
   </g>
 
