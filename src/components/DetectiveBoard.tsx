@@ -8,7 +8,7 @@ import projectPersonality from '@/assets/project-personality-game.jpg';
 import achievementMap from '@/assets/achievement-map.jpg';
 
 interface ModalData {
-  type: 'case-file' | 'project' | 'skills' | 'achievements' | 'contact' | null;
+  type: 'case-file' | 'project' | 'console' | 'skills' | 'achievements' | 'contact' | null;
   content?: any;
 }
 
@@ -65,6 +65,7 @@ export const DetectiveBoard = () => {
 >
   Projects
 </button>
+               <button onClick={() => openModal('console')} className="hover:underline underline-offset-4">Evidence Console</button>
               <button onClick={() => openModal('achievements')} className="hover:underline underline-offset-4">Achievements</button>
               <button onClick={() => openModal('contact')} className="hover:underline underline-offset-4">Contact</button>
             </div>
@@ -294,6 +295,7 @@ export const DetectiveBoard = () => {
           <DialogContent className="bg-transparent p-0 shadow-none flex justify-center items-center overflow-visible">
   {modalData.type === 'case-file' && <CaseFileModal />}
   {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
+  {modalData.type === 'console' && <ConsoleModal />}
   {modalData.type === 'skills' && <SkillsModal />}
   {modalData.type === 'achievements' && <AchievementsModal />}
   {modalData.type === 'contact' && <ContactModal onClose={closeModal}/>}
@@ -714,6 +716,1226 @@ const ContactModal = ({ onClose }) => {
 
 
 
+
+
+
+
+import { useEffect, useRef } from "react";
+// import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+const ConsoleModal = () => {
+  const [history, setHistory] = useState<string[]>([
+    "Welcome to the Evidence Console. Type 'help' for commands."
+  ]);
+  const [currentLine, setCurrentLine] = useState("$ ");
+  const terminalRef = useRef<HTMLDivElement>(null);
+
+  // --- Handle key input ---
+  // const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter") {
+  //     const command = currentLine.slice(2).trim(); // remove "> "
+  //     if (!command) {
+  //       setHistory(prev => [...prev, "> "]);
+  //       setCurrentLine("> ");
+  //       return;
+  //     }
+
+  //     let output = "";
+  //     switch (command.toLowerCase()) {
+  //       case "help":
+  //         output = "Available commands: resume, projects, skills, achievements, clear";
+  //         break;
+  //       case "resume":
+  //         output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+  //         break;
+  //       case "projects":
+  //         output = "Projects: Wall of Passion, Personality Game";
+  //         break;
+  //       case "skills":
+  //         output = "Skills: C++, Python, JavaScript, React, Node.js...";
+  //         break;
+  //       case "achievements":
+  //         output = "Achievements: Hackathons, Certifications, Personal Projects";
+  //         break;
+  //       case "clear":
+  //         setHistory([]);
+  //         setCurrentLine("> ");
+  //         return;
+  //       default:
+  //         output = `'${command}' is not recognized. Type 'help' for commands.`;
+  //     }
+
+  //     // push the entered command and the full output instantly
+  //     setHistory(prev => [...prev, currentLine, output, "> "]);
+  //     setCurrentLine("> ");
+  //   } else if (e.key === "Backspace") {
+  //     setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+  //   } else if (e.key.length === 1) {
+  //     setCurrentLine(prev => prev + e.key);
+  //   }
+  // };
+
+
+  // --- Handle key input ---
+const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (e.key === "Enter") {
+    const command = currentLine.slice(2).trim(); // remove "> "
+    if (!command) {
+      setHistory(prev => [...prev, currentLine]);
+      setCurrentLine("$ ");
+      return;
+    }
+
+    let output = "";
+    switch (command.toLowerCase()) {
+      case "help":
+        output = "Available commands: resume, projects, skills, achievements, contact, clear";
+        break;
+      case "resume":
+        output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+        break;
+      case "projects":
+        output = "Projects: Wall of Passion, Personality Game";
+        break;
+      case "contact":
+        output = "Email: garvdeep.work@gmail.com | Github: github.com/garvdeep-singh"  ;
+        break;
+      case "skills":
+        output = "C, → C++, → JavaScript, → TypeScript, → Java, → Python, → Node.js, → Express.js, → React.js, → Next.js, → Git/Github";
+        break;
+      case "achievements":
+        output = "Achievements: Hackathons, Certifications, Personal Projects";
+        break;
+      case "clear":
+        setHistory(["Welcome to the Evidence Console. Type 'help' for commands."]);
+        setCurrentLine("$ ");
+        return;
+      default:
+        output = `'${command}' is not recognized. Type 'help' for commands.`;
+    }
+
+    // only add command and output to history
+    setHistory(prev => [...prev, currentLine, output]);
+    setCurrentLine("$ ");
+  } else if (e.key === "Backspace") {
+    setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+  } else if (e.key.length === 1) {
+    setCurrentLine(prev => prev + e.key);
+  }
+};
+  // --- Auto-scroll to bottom ---
+  useEffect(() => {
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [history, currentLine]);
+
+  return (
+    <div
+      className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto"
+      ref={terminalRef}
+    >
+      <DialogHeader>
+        <DialogTitle className="text-2xl text-green-400">
+          Evidence Console
+        </DialogTitle>
+      </DialogHeader>
+
+      <div className="mt-2">
+        {history.map((line, idx) => (
+          <div key={idx}>{line}</div>
+        ))}
+
+        {/* Active input line with blinking cursor */}
+        <div>
+          {currentLine}
+          <span className="inline-block w-2 animate-blink">█</span>
+        </div>
+
+        {/* Hidden input to capture keystrokes */}
+        <input
+          type="text"
+          className="absolute opacity-0 pointer-events-none"
+          value={currentLine}
+          onChange={() => {}}
+          onKeyDown={handleKey}
+          autoFocus
+        />
+      </div>
+
+      {/* Blinking cursor animation */}
+      <style>
+        {`
+          @keyframes blink {
+            0%, 50% { opacity: 1; }
+            50.01%, 100% { opacity: 0; }
+          }
+          .animate-blink {
+            animation: blink 1s step-start infinite;
+          }
+        `}
+      </style>
+    </div>
+  );
+};
+
+export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from "react";
+// // import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+// const ConsoleModal = () => {
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+//   const [currentLine, setCurrentLine] = useState("> ");
+//   const [isTyping, setIsTyping] = useState(false);
+//   const terminalRef = useRef<HTMLDivElement>(null);
+
+//   // --- Typing animation for output ---
+//   const typeLine = (line: string, callback?: () => void) => {
+//     setIsTyping(true);
+//     let index = 0;
+
+//     // add empty line for animation
+//     setHistory(prev => [...prev, ""]);
+
+//     const interval = setInterval(() => {
+//       setHistory(prev => {
+//         const newHistory = [...prev];
+//         newHistory[newHistory.length - 1] += line[index] || "";
+//         return newHistory;
+//       });
+
+//       index++;
+//       if (index >= line.length) {
+//         clearInterval(interval);
+//         setIsTyping(false);
+//         // add a new prompt
+//         setHistory(prev => [...prev, "> "]);
+//         setCurrentLine("> ");
+//         callback?.();
+//       }
+//     }, 30); // typing speed
+//   };
+
+//   // --- Handle key input ---
+//   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//     if (isTyping) return; // ignore input while typing animation runs
+
+//     if (e.key === "Enter") {
+//       const command = currentLine.slice(2).trim();
+//       if (!command) {
+//         setHistory(prev => [...prev, "> "]);
+//         setCurrentLine("> ");
+//         return;
+//       }
+
+//       let output = "";
+//       switch (command.toLowerCase()) {
+//         case "help":
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case "resume":
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case "projects":
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case "skills":
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case "achievements":
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case "clear":
+//           setHistory([]);
+//           setCurrentLine("> ");
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       // save entered command before typing response
+//       setHistory(prev => [...prev, currentLine]);
+//       setCurrentLine(""); 
+//       typeLine(output);
+//     } else if (e.key === "Backspace") {
+//       setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//     } else if (e.key.length === 1) {
+//       setCurrentLine(prev => prev + e.key);
+//     }
+//   };
+
+//   // --- Auto-scroll to bottom ---
+//   useEffect(() => {
+//     if (terminalRef.current) {
+//       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+//     }
+//   }, [history, currentLine]);
+
+//   return (
+//     <div
+//       className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto"
+//       ref={terminalRef}
+//     >
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl text-green-400">
+//           Evidence Console
+//         </DialogTitle>
+//       </DialogHeader>
+
+//       <div className="mt-2">
+//         {history.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+
+//         {/* Active input line with blinking cursor */}
+//         {!isTyping && (
+//           <div>
+//             {currentLine}
+//             <span className="inline-block w-2 animate-blink">█</span>
+//           </div>
+//         )}
+
+//         {/* Hidden input to capture keystrokes */}
+//         <input
+//           type="text"
+//           className="absolute opacity-0 pointer-events-none"
+//           value={currentLine}
+//           onChange={() => {}}
+//           onKeyDown={handleKey}
+//           autoFocus
+//         />
+//       </div>
+
+//       {/* Blinking cursor animation */}
+//       <style>
+//         {`
+//           @keyframes blink {
+//             0%, 50% { opacity: 1; }
+//             50.01%, 100% { opacity: 0; }
+//           }
+//           .animate-blink {
+//             animation: blink 1s step-start infinite;
+//           }
+//         `}
+//       </style>
+//     </div>
+//   );
+// };
+
+// export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from "react";
+// // import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+// const ConsoleModal = () => {
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+//   const [currentLine, setCurrentLine] = useState("> ");
+//   const [isTyping, setIsTyping] = useState(false);
+//   const terminalRef = useRef<HTMLDivElement>(null);
+
+//   // --- Typing animation ---
+//   const typeLine = (line: string, callback?: () => void) => {
+//     setIsTyping(true);
+//     let index = 0;
+//     setHistory(prev => [...prev, ""]); // reserve a new line for typing
+
+//     const interval = setInterval(() => {
+//       setHistory(prev => {
+//         const newHistory = [...prev];
+//         newHistory[newHistory.length - 1] += line[index] || "";
+//         return newHistory;
+//       });
+
+//       index++;
+//       if (index >= line.length) {
+//         clearInterval(interval);
+//         setIsTyping(false);
+//         setHistory(prev => [...prev, "> "]); // new prompt line
+//         setCurrentLine("> ");
+//         callback?.();
+//       }
+//     }, 30); // typing speed
+//   };
+
+//   // --- Handle key input ---
+//   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//     if (isTyping) return;
+
+//     if (e.key === "Enter") {
+//       const command = currentLine.slice(2).trim(); // remove '> '
+//       if (!command) {
+//         setHistory(prev => [...prev, "> "]);
+//         setCurrentLine("> ");
+//         return;
+//       }
+
+//       let output = "";
+//       switch (command.toLowerCase()) {
+//         case "help":
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case "resume":
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case "projects":
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case "skills":
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case "achievements":
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case "clear":
+//           setHistory([]);
+//           setCurrentLine("> ");
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       // save the entered command first
+//       setHistory(prev => [...prev, currentLine]);
+//       setCurrentLine(""); // clear so we don’t duplicate
+//       typeLine(output);
+//     } else if (e.key === "Backspace") {
+//       setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//     } else if (e.key.length === 1) {
+//       setCurrentLine(prev => prev + e.key);
+//     }
+//   };
+
+//   // --- Auto scroll to bottom ---
+//   useEffect(() => {
+//     if (terminalRef.current) {
+//       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+//     }
+//   }, [history, currentLine]);
+
+//   return (
+//     <div
+//       className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto"
+//       ref={terminalRef}
+//     >
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl text-green-400">Evidence Console</DialogTitle>
+//       </DialogHeader>
+
+//       <div className="mt-2">
+//         {history.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+
+//         {/* Active input line */}
+//         {!isTyping && (
+//           <div>
+//             {currentLine}
+//             <span className="inline-block w-2 animate-blink">█</span>
+//           </div>
+//         )}
+
+//         {/* Hidden input field to capture keystrokes */}
+//         <input
+//           type="text"
+//           className="absolute opacity-0 pointer-events-none"
+//           value={currentLine}
+//           onChange={() => {}}
+//           onKeyDown={handleKey}
+//           autoFocus
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from "react";
+// // import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+// const ConsoleModal = () => {
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands.",
+//     "> "
+//   ]);
+//   const [currentLine, setCurrentLine] = useState("> ");
+//   const [isTyping, setIsTyping] = useState(false);
+//   const terminalRef = useRef<HTMLDivElement>(null);
+
+//   // Typing animation for output
+//   // const typeLine = (line: string, callback?: () => void) => {
+//   //   setIsTyping(true);
+//   //   let index = 0;
+//   //   setHistory(prev => [...prev, ""]); // add empty line for typing
+
+//   //   const interval = setInterval(() => {
+//   //     setHistory(prev => {
+//   //       const newHistory = [...prev];
+//   //       newHistory[newHistory.length - 1] += line[index];
+//   //       return newHistory;
+//   //     });
+//   //     index++;
+//   //     if (index === line.length) {
+//   //       clearInterval(interval);
+//   //       setIsTyping(false);
+//   //       setHistory(prev => [...prev, "> "]); // new prompt after output
+//   //       setCurrentLine("> ");
+//   //       callback?.();
+//   //     }
+//   //   }, 20);
+//   // };
+
+//   // // Handle key presses
+//   // const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//   //   if (isTyping) return;
+
+//   //   if (e.key === "Enter") {
+//   //     const command = currentLine.slice(2).trim(); // remove '> '
+//   //     if (!command) {
+//   //       setHistory(prev => [...prev, "> "]);
+//   //       setCurrentLine("> ");
+//   //       return;
+//   //     }
+
+//   //     let output = "";
+//   //     switch (command.toLowerCase()) {
+//   //       case "help":
+//   //         output =
+//   //           "Available commands: resume, projects, skills, achievements, clear";
+//   //         break;
+//   //       case "resume":
+//   //         output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//   //         break;
+//   //       case "projects":
+//   //         output = "Projects: Wall of Passion, Personality Game";
+//   //         break;
+//   //       case "skills":
+//   //         output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//   //         break;
+//   //       case "achievements":
+//   //         output =
+//   //           "Achievements: Hackathons, Certifications, Personal Projects";
+//   //         break;
+//   //       case "clear":
+//   //         setHistory(["> "]);
+//   //         setCurrentLine("> ");
+//   //         return;
+//   //       default:
+//   //         output = `'${command}' is not recognized. Type 'help' for commands.`;
+//   //     }
+
+//   //     // Add command to history and animate output
+//   //     setHistory(prev => [...prev.slice(0, -1), currentLine]); // replace current prompt
+//   //     setCurrentLine(""); // clear input for animation
+//   //     typeLine(output);
+//   //   } else if (e.key === "Backspace") {
+//   //     setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//   //   } else if (e.key.length === 1) {
+//   //     setCurrentLine(prev => prev + e.key);
+//   //   }
+//   // };
+
+//   // Typing animation for output
+// const typeLine = (line: string, callback?: () => void) => {
+//   setIsTyping(true);
+//   let index = 0;
+
+//   setHistory(prev => [...prev, ""]); // add empty line to type into
+
+//   const interval = setInterval(() => {
+//     setHistory(prev => {
+//       const newHistory = [...prev];
+//       if (newHistory.length === 0) newHistory.push(""); // safety
+//       newHistory[newHistory.length - 1] += line[index] || "";
+//       return newHistory;
+//     });
+
+//     index++;
+//     if (index === line.length) {
+//       clearInterval(interval);
+//       setIsTyping(false);
+//       setHistory(prev => [...prev, "> "]); // add new prompt after output
+//       setCurrentLine("> ");
+//       callback?.();
+//     }
+//   }, 20);
+// };
+
+// // Handle key presses
+// const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//   if (isTyping) return;
+
+//   if (e.key === "Enter") {
+//     const command = currentLine.slice(2).trim(); // remove '> '
+//     if (!command) {
+//       setHistory(prev => [...prev, "> "]);
+//       setCurrentLine("> ");
+//       return;
+//     }
+
+//     let output = "";
+//     switch (command.toLowerCase()) {
+//       case "help":
+//         output =
+//           "Available commands: resume, projects, skills, achievements, clear";
+//         break;
+//       case "resume":
+//         output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//         break;
+//       case "projects":
+//         output = "Projects: Wall of Passion, Personality Game";
+//         break;
+//       case "skills":
+//         output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//         break;
+//       case "achievements":
+//         output =
+//           "Achievements: Hackathons, Certifications, Personal Projects";
+//         break;
+//       case "clear":
+//         setHistory(["> "]);
+//         setCurrentLine("> ");
+//         return;
+//       default:
+//         output = `'${command}' is not recognized. Type 'help' for commands.`;
+//     }
+
+//     // Save the entered command as is, before animating output
+//     setHistory(prev => [...prev.slice(0, -1), currentLine]);
+//     typeLine(output); // animate output
+//   } else if (e.key === "Backspace") {
+//     setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//   } else if (e.key.length === 1) {
+//     setCurrentLine(prev => prev + e.key);
+//   }
+// };
+//   // Scroll to bottom when history updates
+//   useEffect(() => {
+//     if (terminalRef.current) {
+//       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+//     }
+//   }, [history, currentLine]);
+
+//   return (
+//     <div className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto" ref={terminalRef}>
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl text-green-400">Evidence Console</DialogTitle>
+//       </DialogHeader>
+//       <div className="mt-2">
+//         {history.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+//         <div>
+//           {currentLine}
+//           <span className="inline-block w-2 animate-blink">█</span>
+//         </div>
+//         <input
+//           type="text"
+//           className="absolute opacity-0 pointer-events-none"
+//           value={currentLine}
+//           onChange={() => {}}
+//           onKeyDown={handleKey}
+//           autoFocus
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from 'react';
+// // import { , DialogTitle } from './YourDialogComponents'; // adjust imports if needed
+
+// const ConsoleModal = () => {
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+//   const [currentLine, setCurrentLine] = useState('> ');
+//   const [isTyping, setIsTyping] = useState(false);
+//   const terminalRef = useRef<HTMLDivElement>(null);
+//   const inputRef = useRef<HTMLInputElement>(null);
+
+//   // Focus input on mount
+//   useEffect(() => {
+//     inputRef.current?.focus();
+//   }, []);
+
+//   // Scroll to bottom when history updates
+//   useEffect(() => {
+//     if (terminalRef.current) {
+//       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+//     }
+//   }, [history, currentLine]);
+
+//   // Typing animation for output
+//   const typeLine = (line: string, callback?: () => void) => {
+//     setIsTyping(true);
+//     let index = 0;
+//     setHistory(prev => [...prev, '']); // add new line to type into
+
+//     const interval = setInterval(() => {
+//       setHistory(prev => {
+//         const newHistory = [...prev];
+//         newHistory[newHistory.length - 1] += line[index];
+//         return newHistory;
+//       });
+
+//       index++;
+//       if (index === line.length) {
+//         clearInterval(interval);
+//         setIsTyping(false);
+//         setHistory(prev => [...prev, '> ']); // add new prompt
+//         setCurrentLine('> ');
+//         callback?.();
+//       }
+//     }, 20); // adjust speed (ms per character)
+//   };
+
+//   // Handle input key events
+//   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//     if (isTyping) return;
+
+//     if (e.key === 'Enter') {
+//       const command = currentLine.slice(2).trim(); // remove '> '
+
+//       setHistory(prev => [...prev, currentLine]); // save command
+//       setCurrentLine(''); // clear for typing output
+
+//       if (!command) {
+//         setHistory(prev => [...prev, '> ']);
+//         setCurrentLine('> ');
+//         return;
+//       }
+
+//       let output = '';
+//       switch (command.toLowerCase()) {
+//         case 'help':
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case 'resume':
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case 'projects':
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case 'skills':
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case 'achievements':
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case 'clear':
+//           setHistory([]);
+//           setCurrentLine('> ');
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       typeLine(output);
+//     } else if (e.key === 'Backspace') {
+//       setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//     } else if (e.key.length === 1) {
+//       setCurrentLine(prev => prev + e.key);
+//     }
+//   };
+
+//   return (
+//     <div className="typewriter bg-paper-aged p-4 rounded-lg shadow-lg transform rotate-0 transition-transform duration-300 max-w-2xl w-full">
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl">Evidence Console</DialogTitle>
+//       </DialogHeader>
+
+//       <div
+//         ref={terminalRef}
+//         className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto"
+//         onClick={() => inputRef.current?.focus()} // click to focus
+//       >
+//         {history.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+//         <div className="flex">
+//           <span>{currentLine}</span>
+//           <span className="inline-block w-2 animate-blink">█</span>
+//         </div>
+//       </div>
+
+//       {/* Hidden input to capture typing */}
+//       <input
+//         ref={inputRef}
+//         type="text"
+//         value={currentLine.slice(2)} // remove '> ' prefix
+//         onChange={(e) => setCurrentLine('> ' + e.target.value)}
+//         onKeyDown={handleKey}
+//         className="absolute opacity-0 pointer-events-none"
+//         autoFocus
+//       />
+//     </div>
+//   );
+// };
+
+// export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from 'react';
+
+// const ConsoleModal = () => {
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+//   const [currentLine, setCurrentLine] = useState('> ');
+//   const [isTyping, setIsTyping] = useState(false);
+//   const terminalRef = useRef<HTMLDivElement>(null);
+
+//   // Typing animation effect for command outputs
+//   // const typeLine = (line: string, callback?: () => void) => {
+//   //   setIsTyping(true);
+//   //   let index = 0;
+//   //   const interval = setInterval(() => {
+//   //     setHistory(prev => [...prev.slice(0, -1), prev[prev.length - 1] + line[index]]);
+//   //     index++;
+//   //     if (index === line.length) {
+//   //       clearInterval(interval);
+//   //       setIsTyping(false);
+//   //       setHistory(prev => [...prev, '> ']); // add new prompt
+//   //       callback?.();
+//   //     }
+//   //   }, 20);
+//   // };
+
+//   const typeLine = (line: string, callback?: () => void) => {
+//   setIsTyping(true);
+//   let index = 0;
+//   setHistory(prev => [...prev, '']); // add empty line to type into
+
+//   const interval = setInterval(() => {
+//     setHistory(prev => {
+//       const newHistory = [...prev];
+//       newHistory[newHistory.length - 1] += line[index];
+//       return newHistory;
+//     });
+
+//     index++;
+//     if (index === line.length) {
+//       clearInterval(interval);
+//       setIsTyping(false);
+//       setHistory(prev => [...prev, '> ']); // new prompt after output
+//       setCurrentLine('> ');
+//       callback?.();
+//     }
+//   }, 20);
+// };
+
+//   // Handle key presses
+//   const handleKey = (e: KeyboardEvent) => {
+//     if (isTyping) return;
+
+//     if (e.key === 'Enter') {
+//       const command = currentLine.slice(2).trim(); // remove '> '
+//       if (!command) {
+//         setHistory(prev => [...prev, '> ']);
+//         setCurrentLine('> ');
+//         return;
+//       }
+
+//       let output = '';
+//       switch (command.toLowerCase()) {
+//         case 'help':
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case 'resume':
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case 'projects':
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case 'skills':
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case 'achievements':
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case 'clear':
+//           setHistory([]);
+//           setCurrentLine('> ');
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       setHistory(prev => [...prev, currentLine]); // save entered command
+//       setCurrentLine(''); // clear current line for animation
+//       typeLine(output); // animate output
+//     } else if (e.key === 'Backspace') {
+//       setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
+//     } else if (e.key.length === 1) {
+//       setCurrentLine(prev => prev + e.key);
+//     }
+//   };
+
+//   // Attach key listener
+//   useEffect(() => {
+//     window.addEventListener('keydown', handleKey);
+//     return () => window.removeEventListener('keydown', handleKey);
+//   }, [currentLine, isTyping]);
+
+//   // Scroll to bottom
+//   useEffect(() => {
+//     if (terminalRef.current) {
+//       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+//     }
+//   }, [history, currentLine]);
+
+//   return (
+//     // <div
+//     //   ref={terminalRef}
+//     //   className="fixed inset-0 z-50 bg-black text-green-400 p-4 font-mono text-sm overflow-y-auto"
+//     // >
+//     //   {history.map((line, idx) => (
+//     //     <div key={idx}>{line}</div>
+//     //   ))}
+//     //   <div>
+//     //     {currentLine}
+//     //     <span className="inline-block w-2 animate-blink">█</span>
+//     //   </div>
+//     // </div>
+
+//     <div
+//   ref={terminalRef}
+//   className="bg-black text-green-400 p-4 font-mono text-sm rounded h-96 overflow-y-auto"
+// >
+//   {history.map((line, idx) => (
+//     <div key={idx}>{line}</div>
+//   ))}
+//   <div>
+//     {currentLine}
+//     <span className="inline-block w-2 animate-blink">█</span>
+//   </div>
+// </div>
+//   );
+// };
+
+// export default ConsoleModal;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// import { useEffect, useRef } from 'react';
+
+// const ConsoleModal = () => {
+//   const [input, setInput] = useState('');
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+//   const [displayedHistory, setDisplayedHistory] = useState<string[]>([]);
+//   const [isTyping, setIsTyping] = useState(false);
+//   const historyRef = useRef<HTMLDivElement>(null);
+
+//   // Typing animation effect
+//   const typeLine = (line: string, callback?: () => void) => {
+//     setIsTyping(true);
+//     let index = 0;
+//     const interval = setInterval(() => {
+//       setDisplayedHistory(prev => {
+//         const newPrev = [...prev];
+//         if (!newPrev[newPrev.length - 1]?.startsWith('>')) {
+//           newPrev.push('');
+//         }
+//         newPrev[newPrev.length - 1] += line[index];
+//         return newPrev;
+//       });
+//       index++;
+//       if (index === line.length) {
+//         clearInterval(interval);
+//         setIsTyping(false);
+//         callback?.();
+//       }
+//     }, 20); // typing speed (ms per character)
+//   };
+
+//   const handleCommand = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//     if (e.key === 'Enter' && input.trim() && !isTyping) {
+//       const command = input.trim();
+//       let output = '';
+
+//       switch (command.toLowerCase()) {
+//         case 'help':
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case 'resume':
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case 'projects':
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case 'skills':
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case 'achievements':
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case 'clear':
+//           setHistory([]);
+//           setDisplayedHistory([]);
+//           setInput('');
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       setHistory(prev => [...prev, `> ${command}`, output]);
+//       setDisplayedHistory(prev => [...prev, `> ${command}`]);
+//       setInput('');
+
+//       // Animate output
+//       typeLine(output);
+//     }
+//   };
+
+//   // Scroll to bottom when history updates
+//   useEffect(() => {
+//     if (historyRef.current) {
+//       historyRef.current.scrollTop = historyRef.current.scrollHeight;
+//     }
+//   }, [displayedHistory]);
+
+//   return (
+//     <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-0 transition-transform duration-300 max-w-xl w-full">
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl">Evidence Console</DialogTitle>
+//       </DialogHeader>
+
+//       <div
+//         className="bg-black text-green-400 p-4 rounded h-64 overflow-y-auto font-mono text-sm mb-2"
+//         ref={historyRef}
+//       >
+//         {displayedHistory.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+//         <span className="animate-blink">█</span>
+//       </div>
+
+//       <input
+//         type="text"
+//         value={input}
+//         onChange={(e) => setInput(e.target.value)}
+//         onKeyDown={handleCommand}
+//         placeholder="Type a command..."
+//         className="w-full p-2 border border-muted rounded bg-black text-green-400 font-mono text-sm"
+//         disabled={isTyping}
+//       />
+//     </div>
+//   );
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+// const ConsoleModal = () => {
+//   const [input, setInput] = useState('');
+//   const [history, setHistory] = useState<string[]>([
+//     "Welcome to the Evidence Console. Type 'help' for commands."
+//   ]);
+
+//   const handleCommand = (e: React.KeyboardEvent<HTMLInputElement>) => {
+//     if (e.key === 'Enter') {
+//       const command = input.trim();
+//       let output = '';
+
+//       switch (command.toLowerCase()) {
+//         case 'help':
+//           output = "Available commands: resume, projects, skills, achievements, clear";
+//           break;
+//         case 'resume':
+//           output = "Resume: https://garvdeep.vercel.app/resume.pdf";
+//           break;
+//         case 'projects':
+//           output = "Projects: Wall of Passion, Personality Game";
+//           break;
+//         case 'skills':
+//           output = "Skills: C++, Python, JavaScript, React, Node.js...";
+//           break;
+//         case 'achievements':
+//           output = "Achievements: Hackathons, Certifications, Personal Projects";
+//           break;
+//         case 'clear':
+//           setHistory([]);
+//           setInput('');
+//           return;
+//         default:
+//           output = `'${command}' is not recognized. Type 'help' for commands.`;
+//       }
+
+//       setHistory(prev => [...prev, `> ${command}`, output]);
+//       setInput('');
+//     }
+//   };
+
+//   return (
+//     <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-0 transition-transform duration-300 max-w-xl w-full">
+//       <DialogHeader>
+//         <DialogTitle className="text-2xl">Evidence Console</DialogTitle>
+//       </DialogHeader>
+
+//       <div className="bg-black text-green-400 p-4 rounded h-64 overflow-y-auto font-mono text-sm mb-2">
+//         {history.map((line, idx) => (
+//           <div key={idx}>{line}</div>
+//         ))}
+//       </div>
+
+//       <input
+//         type="text"
+//         value={input}
+//         onChange={(e) => setInput(e.target.value)}
+//         onKeyDown={handleCommand}
+//         placeholder="Type a command..."
+//         className="w-full p-2 border border-muted rounded bg-black text-green-400 font-mono text-sm"
+//       />
+//     </div>
+//   );
+// };
 
 
 
