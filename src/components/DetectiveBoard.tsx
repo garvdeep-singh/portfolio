@@ -8,7 +8,7 @@ import projectPersonality from '@/assets/project-personality-game.jpg';
 import achievementMap from '@/assets/achievement-map.jpg';
 
 interface ModalData {
-  type: 'case-file' | 'project' | 'console' | 'skills' | 'achievements' | 'contact' | null;
+  type: 'case-file' | 'project' | 'console' | 'skills' | 'resume' | 'contact' | null;
   content?: any;
 }
 
@@ -22,29 +22,6 @@ export const DetectiveBoard = () => {
   const closeModal = () => {
     setModalData({ type: null });
   };
-//   const projects = [
-//   {
-//     title: 'Wall of Passion',
-//     image: projectIkipendence,
-//     type: 'Web Application',
-//     role: 'Full-Stack Developer',
-//     duration: '2-3 weeks',
-//     status: 'Completed',
-//     technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
-//     summary: 'A web platform for users to post their passions and interact with others. Shows ability to implement full-stack features and interactive UI.'
-//   },
-//   {
-//     title: 'Personality Game',
-//     image: projectPersonality,
-//     type: 'Web Application',
-//     role: 'Full-Stack Developer',
-//     duration: '2-3 weeks',
-//     status: 'Completed',
-//     technologies: ['HTML5', 'CSS3', 'JavaScript', 'React'],
-//     summary: 'An interactive game that predicts personality types based on user input. Demonstrates logical reasoning and frontend-interactivity skills.'
-//   }
-// ];
-
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden cursor-detective">
@@ -66,7 +43,7 @@ export const DetectiveBoard = () => {
   Projects
 </button>
                <button onClick={() => openModal('console')} className="hover:underline underline-offset-4">Evidence Console</button>
-              <button onClick={() => openModal('achievements')} className="hover:underline underline-offset-4">Achievements</button>
+              <button onClick={() => openModal('resume')} className="hover:underline underline-offset-4">Resume</button>
               <button onClick={() => openModal('contact')} className="hover:underline underline-offset-4">Contact</button>
             </div>
             <div className="flex items-center gap-2">
@@ -220,7 +197,7 @@ export const DetectiveBoard = () => {
         </div>
         
         {/* Achievement Map (Bottom Left) */}
-        <div 
+        {/* <div 
           className="block md:absolute bottom-6 left-4 md:bottom-16 md:left-40 cursor-pointer"
           onClick={() => openModal('achievements')}
         >
@@ -231,8 +208,20 @@ export const DetectiveBoard = () => {
               Journey Map
             </div>
           </div>
-        </div>
-        
+        </div> */}
+        {/* Achievement Map (Bottom Left) */}
+<div 
+  className="block md:absolute bottom-6 left-4 md:bottom-16 md:left-40 cursor-pointer"
+  onClick={() => openModal('resume')}  // ⬅️ instead of 'achievements'
+>
+  <div className="evidence-pin -top-2 -left-2" />
+  <div className="evidence-document w-56 h-44 transform -rotate-12">
+    <img src={achievementMap} alt="Achievement Map" className="w-full h-full object-cover rounded" />
+    <div className="absolute bottom-2 left-2 handwritten text-white bg-black/70 px-2 py-1 rounded">
+      
+    </div>
+  </div>
+</div>
         {/* Contact Business Card (Bottom Right) */}
         <div 
           className="block md:absolute bottom-6 right-4 md:bottom-20 md:right-24 cursor-pointer"
@@ -297,7 +286,8 @@ export const DetectiveBoard = () => {
   {modalData.type === 'project' && <ProjectModal project={modalData.content} />}
   {modalData.type === 'console' && <ConsoleModal />}
   {modalData.type === 'skills' && <SkillsModal />}
-  {modalData.type === 'achievements' && <AchievementsModal />}
+  {/* {modalData.type === 'achievements' && <AchievementsModal />} */}
+  {modalData.type === 'resume' && <ResumeModal />}
   {modalData.type === 'contact' && <ContactModal onClose={closeModal}/>}
 </DialogContent>
 
@@ -340,57 +330,6 @@ const CaseFileModal = () => (
     </div>
   </div>
 );
-
-
-// const ProjectModal = ({ project }: { project: any }) => (
-//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[+2deg] hover:rotate-0 transition-transform duration-300 max-w-xl">
-//     <DialogHeader>
-//       <DialogTitle className="text-2xl">Evidence Analysis: {project?.title}</DialogTitle>
-//     </DialogHeader>
-//     <div className="mt-4 space-y-4">
-//       <img src={project?.image} alt={project?.title} className="w-full h-64 object-cover rounded border" />
-//       <div className="grid grid-cols-2 gap-4">
-//         <div>
-//           <h4 className="font-bold mb-2">Project Details:</h4>
-//           <ul className="text-sm space-y-1">
-//             <li><strong>Type:</strong> Web Application</li>
-//             <li><strong>Role:</strong> Full-Stack Developer</li>
-//             <li><strong>Duration:</strong> 2-3 weeks</li>
-//             <li><strong>Status:</strong> Completed</li>
-//           </ul>
-//         </div>
-//         <div>
-//           <h4 className="font-bold mb-2">Technologies Used:</h4>
-//           <div className="flex flex-wrap gap-2">
-//             {project?.technologies?.map((tech: string) => (
-//               <span key={tech} className="badge-confidential text-xs">{tech}</span>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//       <div className="border border-muted p-4 rounded">
-//         <h4 className="font-bold mb-2">Investigation Summary:</h4>
-//         <p className="text-sm">{project?.summary}</p>
-//       </div>
-//       <div className="flex gap-2">
-//         {project?.live && (
-//           <Button variant="outline" size="sm" className="typewriter">
-//             <a href={project.live} target="_blank" rel="noopener noreferrer">
-//               View Live Demo
-//             </a>
-//           </Button>
-//         )}
-//         {project?.code && (
-//           <Button variant="outline" size="sm" className="typewriter">
-//             <a href={project.code} target="_blank" rel="noopener noreferrer">
-//               Examine Code
-//             </a>
-//           </Button>
-//         )}
-//       </div>
-//     </div>
-//   </div>
-// );
 
 
 
@@ -551,30 +490,46 @@ const SkillsModal = () => (
   </div>
 );
 
-const AchievementsModal = () => (
-  <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
-    <DialogHeader>
-      <DialogTitle className="text-2xl">Journey Timeline & Achievements</DialogTitle>
-    </DialogHeader>
-    <div className="mt-4 space-y-4">
-      <img src={achievementMap} alt="Achievement Map" className="w-full h-48 object-cover rounded border" />
+// const AchievementsModal = () => (
+//   <div className="typewriter bg-paper-aged p-6 rounded-lg shadow-lg transform rotate-[-1deg] hover:rotate-0 transition-transform duration-300">
+//     <DialogHeader>
+//       <DialogTitle className="text-2xl">Journey Timeline & Achievements</DialogTitle>
+//     </DialogHeader>
+//     <div className="mt-4 space-y-4">
+//       <img src={achievementMap} alt="Achievement Map" className="w-full h-48 object-cover rounded border" />
       
-      <div className="space-y-4">
-        {[
-          { year: '2024', event: 'Hackathon Participation', location: 'TechFest College' },
-          { year: '2023', event: 'Web Development Certification', location: 'Online Course' },
-          { year: '2023', event: 'First Major Project Launch', location: 'Personal Portfolio' },
-          { year: '2022', event: 'Started Web Development Journey', location: 'Self-Learning' }
-        ].map((achievement, index) => (
-          <div key={index} className="flex items-center gap-4 p-3 border border-muted rounded">
-            <div className="w-3 h-3 bg-primary rounded-full flex-shrink-0" />
-            <div className="flex-1">
-              <div className="font-bold">{achievement.event}</div>
-              <div className="text-sm text-muted-foreground">{achievement.year} • {achievement.location}</div>
-            </div>
-          </div>
-        ))}
-      </div>
+//       <div className="space-y-4">
+//         {[
+//           { year: '2024', event: 'Hackathon Participation', location: 'TechFest College' },
+//           { year: '2023', event: 'Web Development Certification', location: 'Online Course' },
+//           { year: '2023', event: 'First Major Project Launch', location: 'Personal Portfolio' },
+//           { year: '2022', event: 'Started Web Development Journey', location: 'Self-Learning' }
+//         ].map((achievement, index) => (
+//           <div key={index} className="flex items-center gap-4 p-3 border border-muted rounded">
+//             <div className="w-3 h-3 bg-primary rounded-full flex-shrink-0" />
+//             <div className="flex-1">
+//               <div className="font-bold">{achievement.event}</div>
+//               <div className="text-sm text-muted-foreground">{achievement.year} • {achievement.location}</div>
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   </div>
+// );
+
+const ResumeModal = () => (
+  <div className="bg-paper-aged p-6 rounded-lg shadow-lg w-full h-[80vh]">
+    <DialogHeader>
+      <DialogTitle className="text-2xl">My Resume</DialogTitle>
+    </DialogHeader>
+    <div className="mt-4 w-full h-full">
+      <iframe
+        // src="https://drive.google.com/file/d/1KJxHRQSGA13_82DPcnatZvoaCxFoC9As/preview"
+        src="/resume.pdf"
+        className="w-full h-[70vh] border rounded"
+        title="Resume"
+      />
     </div>
   </div>
 );
@@ -730,51 +685,6 @@ const ConsoleModal = () => {
   const [currentLine, setCurrentLine] = useState("$ ");
   const terminalRef = useRef<HTMLDivElement>(null);
 
-  // --- Handle key input ---
-  // const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter") {
-  //     const command = currentLine.slice(2).trim(); // remove "> "
-  //     if (!command) {
-  //       setHistory(prev => [...prev, "> "]);
-  //       setCurrentLine("> ");
-  //       return;
-  //     }
-
-  //     let output = "";
-  //     switch (command.toLowerCase()) {
-  //       case "help":
-  //         output = "Available commands: resume, projects, skills, achievements, clear";
-  //         break;
-  //       case "resume":
-  //         output = "Resume: https://garvdeep.vercel.app/resume.pdf";
-  //         break;
-  //       case "projects":
-  //         output = "Projects: Wall of Passion, Personality Game";
-  //         break;
-  //       case "skills":
-  //         output = "Skills: C++, Python, JavaScript, React, Node.js...";
-  //         break;
-  //       case "achievements":
-  //         output = "Achievements: Hackathons, Certifications, Personal Projects";
-  //         break;
-  //       case "clear":
-  //         setHistory([]);
-  //         setCurrentLine("> ");
-  //         return;
-  //       default:
-  //         output = `'${command}' is not recognized. Type 'help' for commands.`;
-  //     }
-
-  //     // push the entered command and the full output instantly
-  //     setHistory(prev => [...prev, currentLine, output, "> "]);
-  //     setCurrentLine("> ");
-  //   } else if (e.key === "Backspace") {
-  //     setCurrentLine(prev => (prev.length > 2 ? prev.slice(0, -1) : prev));
-  //   } else if (e.key.length === 1) {
-  //     setCurrentLine(prev => prev + e.key);
-  //   }
-  // };
-
 
   // --- Handle key input ---
 const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -795,21 +705,6 @@ const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
         output = "Resume: https://drive.google.com/file/d/1KJxHRQSGA13_82DPcnatZvoaCxFoC9As/view?usp=sharing";
         break;
 
-    //   case "resume":
-    // output = (
-    //   <span>
-    //     Resume:{" "}
-    //     <a
-    //       href="https://drive.google.com/file/d/1KJxHRQSGA13_82DPcnatZvoaCxFoC9As/view?usp=sharing"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //       className="underline text-blue-400 hover:text-blue-600"
-    //     >
-    //       View Resume
-    //     </a>
-    //   </span>
-    // );
-    // break;
       case "projects":
         output = "Projects: Wall of Passion, Personality Game";
         break;
